@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <router-link to='/home'>home</router-link>
+        <router-link to='/about'>about</router-link>
+
+
+        <router-view></router-view>
+
+    </div>
+
+
+    <template id="home">
+        <div>
+            <h1>首页</h1>
+        </div>
+    </template>
+    <template id="about">
+        <div>
+            <h1>关于</h1>
+            <router-link to='/about/aboutUs'>关于我们</router-link>
+            <router-link to='/about/aboutThey'>关于他们</router-link>
+
+            <router-view></router-view>
+        </div>
+    </template>
+    <template id="redirect">
+        <div>
+            <h1>抱歉，没有找到页面。404...</h1>
+        </div>
+    </template>
+
+    <template id="aboutUs">
+        <div>
+            <h3>关于我们</h3>
+        </div>
+    </template>
+    <template id="aboutThey">
+        <div>
+            <h3>关于他们</h3>
+        </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script>
+
+        const aboutUs = {
+            template: '#aboutUs'
+        }
+        const aboutThey = {
+            template: '#aboutThey'
+        }
+
+
+
+        const Home = {
+            template: '#home'
+        }
+        const About = {
+            template: '#about',
+
+        }
+        const Nopage = {
+            template: '#redirect'
+        }
+
+
+
+        const routes = [
+            { path: '/home', component: Home },
+            { path: '/about', component: About, children: [{ path: 'aboutUs', component: aboutUs, name: aboutUs }, { path: 'aboutThey', component: aboutThey, name: aboutThey }] },
+            { path: '*', component: Nopage }
+        ]
+
+        const router = new VueRouter({
+            routes
+        })
+
+
+
+        new Vue({
+            el: '#app',
+            data: {
+
+            },
+            router
+        })
+
+
+    </script>
+</body>
+
+</html>
