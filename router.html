@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/home'>home</router-link> |
+        <router-link to='/news'>news</router-link> |
+        <router-link :to="{name:'about'}">about</router-link> |
+        <router-link to='/more'>more</router-link>
+
+        <router-view></router-view>
+
+    </div>
+
+
+    <template id="home">
+        <div>
+            <h1>首页</h1>
+        </div>
+    </template>
+
+    <template id="about">
+        <div>
+            <h1>关于</h1>
+
+            <router-link to='/about/aboutUs'>关于我们</router-link>
+            <router-link to='/about/aboutThey'>关于我们</router-link>
+
+            <router-view></router-view>
+        </div>
+    </template>
+
+    <template id="news">
+        <div>
+            <h1>
+                新闻
+            </h1>
+        </div>
+    </template>
+
+    <template id="more">
+        <div>
+            <h1>
+                更多
+            </h1>
+        </div>
+    </template>
+
+    <template id="no">
+        <div>
+            <h1>
+                没有此页面呀。。。
+            </h1>
+        </div>
+    </template>
+
+    <template id="aboutUs">
+        <div>
+            <h3>关于我们</h3>
+        </div>
+    </template>
+    <template id="aboutThey">
+        <div>
+            <h3>关于他们</h3>
+        </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <script>
+        const Home = {
+            template: '#home'
+        }
+        const About = {
+            template: '#about'
+        }
+        const News = {
+            template: '#news'
+        }
+        const More = {
+            template: '#more'
+        }
+        const No = {
+            template: '#no'
+        }
+        const aboutUs = {
+            template: '#aboutUs'
+        }
+        const aboutThey = {
+            template: '#aboutThey'
+        }
+
+        const routes = [
+            { path: '/home', component: Home, },
+            { path: '/news', component: News, alias: ['/b', '/c'] },
+            {
+                path: '/about', name: 'about', component: About, children: [
+                    { path: 'aboutUs', component: aboutUs },
+                    { path: 'aboutThey', component: aboutThey }
+                ]
+            },
+            { path: '/more', component: More },
+            { path: '*', redirect: No },
+        ]
+
+        const router = new VueRouter({
+            routes
+        })
+
+        new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+</body>
+
+</html>
